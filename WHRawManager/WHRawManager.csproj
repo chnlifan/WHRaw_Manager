@@ -288,12 +288,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\%28我的Net类世界集合%29\FanNetWorld\FanNetWorld\FanNetWorld.csproj">
-      <Project>{bd3f5cae-f35b-417d-9b9f-e176cf32f1d7}</Project>
-      <Name>FanNetWorld</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Images\0.png" />
     <Content Include="Images\1.png" />
     <Content Include="Images\bj.jpg" />
@@ -329,6 +323,11 @@
     <Content Include="Sound\no.wav" />
     <Content Include="Sound\ok.wav" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\ProgramLife\程序编程\项目开发\%28我的Net类世界集合%29\FanNetWorld\FanNetWorld\FanNetWorld.csproj">
+      <Project>{bd3f5cae-f35b-417d-9b9f-e176cf32f1d7}</Project>
+      <Name>FanNetWorld</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

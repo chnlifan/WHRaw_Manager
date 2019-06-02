@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27703.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WHRawManager", "WHRawManager\WHRawManager.csproj", "{76A388C2-D483-4C4C-895C-3017C7C9A8CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FanNetWorld", "..\..\(我的Net类世界集合)\FanNetWorld\FanNetWorld\FanNetWorld.csproj", "{BD3F5CAE-F35B-417D-9B9F-E176CF32F1D7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FanNetWorld", "..\..\..\..\ProgramLife\程序编程\项目开发\(我的Net类世界集合)\FanNetWorld\FanNetWorld\FanNetWorld.csproj", "{BD3F5CAE-F35B-417D-9B9F-E176CF32F1D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

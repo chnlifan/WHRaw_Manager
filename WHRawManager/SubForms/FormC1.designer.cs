@@ -43,10 +43,10 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.dgv = new FanNetWorldDataGridViewEx.DataGridViewEx();
-            this.panelMap = new System.Windows.Forms.Panel();
             this.raw = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.rack = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.qty = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.panelMap = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -121,9 +121,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblinfo.Font = new System.Drawing.Font("微软雅黑", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.lblinfo.ForeColor = System.Drawing.Color.Black;
-            this.lblinfo.Location = new System.Drawing.Point(347, 6);
+            this.lblinfo.Location = new System.Drawing.Point(260, 6);
             this.lblinfo.Name = "lblinfo";
-            this.lblinfo.Size = new System.Drawing.Size(660, 74);
+            this.lblinfo.Size = new System.Drawing.Size(734, 74);
             this.lblinfo.TabIndex = 3;
             this.lblinfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -133,9 +133,9 @@
             this.label1.Font = new System.Drawing.Font("微软雅黑", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label1.Location = new System.Drawing.Point(106, 18);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(245, 46);
+            this.label1.Size = new System.Drawing.Size(90, 46);
             this.label1.TabIndex = 1;
-            this.label1.Text = "收货-显示库位";
+            this.label1.Text = "收货";
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // pictureBox1
@@ -150,15 +150,14 @@
             // 
             // txtc1
             // 
-            this.txtc1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtc1.BackColor = System.Drawing.Color.White;
             this.txtc1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtc1.Dock = System.Windows.Forms.DockStyle.Top;
             this.txtc1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txtc1.Location = new System.Drawing.Point(4, 4);
+            this.txtc1.Location = new System.Drawing.Point(0, 0);
+            this.txtc1.Multiline = true;
             this.txtc1.Name = "txtc1";
-            this.txtc1.Size = new System.Drawing.Size(250, 23);
+            this.txtc1.Size = new System.Drawing.Size(259, 51);
             this.txtc1.TabIndex = 2;
             this.txtc1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtc1_KeyDown);
             // 
@@ -241,22 +240,14 @@
             this.rack,
             this.qty});
             this.dgv.Enabled = false;
-            this.dgv.Location = new System.Drawing.Point(4, 33);
+            this.dgv.Location = new System.Drawing.Point(4, 57);
             this.dgv.Name = "dgv";
             this.dgv.ReadOnly = true;
             this.dgv.RowHeadersVisible = false;
             this.dgv.RowTemplate.Height = 23;
             this.dgv.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dgv.Size = new System.Drawing.Size(252, 509);
+            this.dgv.Size = new System.Drawing.Size(252, 485);
             this.dgv.TabIndex = 3;
-            // 
-            // panelMap
-            // 
-            this.panelMap.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelMap.Location = new System.Drawing.Point(261, 87);
-            this.panelMap.Name = "panelMap";
-            this.panelMap.Size = new System.Drawing.Size(896, 655);
-            this.panelMap.TabIndex = 3;
             // 
             // raw
             // 
@@ -280,6 +271,14 @@
             this.qty.HeaderText = "数量";
             this.qty.Name = "qty";
             this.qty.ReadOnly = true;
+            // 
+            // panelMap
+            // 
+            this.panelMap.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelMap.Location = new System.Drawing.Point(261, 87);
+            this.panelMap.Name = "panelMap";
+            this.panelMap.Size = new System.Drawing.Size(896, 655);
+            this.panelMap.TabIndex = 3;
             // 
             // FormC1
             // 

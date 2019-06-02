@@ -45,11 +45,17 @@
             this.rack = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.qty = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panelMap = new System.Windows.Forms.Panel();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.chksingleshow = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -57,6 +63,7 @@
             this.panel1.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.chksingleshow);
             this.panel1.Controls.Add(this.pictureBox2);
             this.panel1.Controls.Add(this.chksound);
             this.panel1.Controls.Add(this.button2);
@@ -119,9 +126,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblinfo.Font = new System.Drawing.Font("微软雅黑", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.lblinfo.ForeColor = System.Drawing.Color.Black;
-            this.lblinfo.Location = new System.Drawing.Point(347, 6);
+            this.lblinfo.Location = new System.Drawing.Point(282, 6);
             this.lblinfo.Name = "lblinfo";
-            this.lblinfo.Size = new System.Drawing.Size(660, 74);
+            this.lblinfo.Size = new System.Drawing.Size(705, 74);
             this.lblinfo.TabIndex = 3;
             this.lblinfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -148,16 +155,14 @@
             // 
             // txtc1
             // 
-            this.txtc1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtc1.BackColor = System.Drawing.Color.White;
             this.txtc1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtc1.Dock = System.Windows.Forms.DockStyle.Top;
             this.txtc1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txtc1.Location = new System.Drawing.Point(3, 4);
+            this.txtc1.Location = new System.Drawing.Point(0, 0);
             this.txtc1.Multiline = true;
             this.txtc1.Name = "txtc1";
-            this.txtc1.Size = new System.Drawing.Size(253, 51);
+            this.txtc1.Size = new System.Drawing.Size(283, 55);
             this.txtc1.TabIndex = 2;
             this.txtc1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtc1_KeyDown);
             // 
@@ -169,10 +174,10 @@
             this.panel3.Controls.Add(this.label2);
             this.panel3.Controls.Add(this.dgv);
             this.panel3.Controls.Add(this.txtc1);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel3.Location = new System.Drawing.Point(0, 87);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(261, 655);
+            this.panel3.Size = new System.Drawing.Size(285, 655);
             this.panel3.TabIndex = 2;
             // 
             // lblqty
@@ -217,7 +222,7 @@
             this.dgv.RowHeadersVisible = false;
             this.dgv.RowTemplate.Height = 23;
             this.dgv.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dgv.Size = new System.Drawing.Size(252, 542);
+            this.dgv.Size = new System.Drawing.Size(276, 542);
             this.dgv.TabIndex = 3;
             // 
             // raw
@@ -241,18 +246,50 @@
             // panelMap
             // 
             this.panelMap.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelMap.Location = new System.Drawing.Point(261, 87);
+            this.panelMap.Location = new System.Drawing.Point(0, 0);
             this.panelMap.Name = "panelMap";
-            this.panelMap.Size = new System.Drawing.Size(896, 655);
+            this.panelMap.Size = new System.Drawing.Size(868, 655);
             this.panelMap.TabIndex = 3;
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.BackColor = System.Drawing.SystemColors.Control;
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 87);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.panel3);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.panelMap);
+            this.splitContainer1.Size = new System.Drawing.Size(1157, 655);
+            this.splitContainer1.SplitterDistance = 285;
+            this.splitContainer1.TabIndex = 4;
+            // 
+            // chksingleshow
+            // 
+            this.chksingleshow.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.chksingleshow.AutoSize = true;
+            this.chksingleshow.Checked = true;
+            this.chksingleshow.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chksingleshow.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.chksingleshow.Location = new System.Drawing.Point(1102, 41);
+            this.chksingleshow.Name = "chksingleshow";
+            this.chksingleshow.Size = new System.Drawing.Size(51, 21);
+            this.chksingleshow.TabIndex = 19;
+            this.chksingleshow.Text = "单显";
+            this.chksingleshow.UseVisualStyleBackColor = true;
             // 
             // FormC2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1157, 742);
-            this.Controls.Add(this.panelMap);
-            this.Controls.Add(this.panel3);
+            this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.panel1);
             this.DoubleBuffered = true;
             this.Name = "FormC2";
@@ -268,6 +305,10 @@
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).EndInit();
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -290,5 +331,7 @@
         private System.Windows.Forms.CheckBox chksound;
         private System.Windows.Forms.PictureBox pictureBox2;
         public System.Windows.Forms.TextBox txtc1;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.CheckBox chksingleshow;
     }
 }
