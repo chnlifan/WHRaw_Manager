@@ -26,6 +26,7 @@ namespace WHRawManager
         int FirstBarID = -1;
         Panel parentpanel = null;
         bool IsMax = false;
+        bool Issingleshow = false;
 
 
         //用于查询物料位置
@@ -49,8 +50,9 @@ namespace WHRawManager
         {
             InitializeComponent();       
             SetStyle(ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer, true);
+            Issingleshow = chksingleshow.Checked;
 
-            if(Convert.ToInt16(db.GetSingleObject("select count(*) from C02")) ==0)
+            if (Convert.ToInt16(db.GetSingleObject("select count(*) from C02")) ==0)
             {
                 MaxTempID = 1;
             }
@@ -133,7 +135,7 @@ namespace WHRawManager
         {
             if (frmlayout1 == null || frmlayout1.IsDisposed)
             {
-                frmlayout1 = new FormRackLayout("Layout1", "原材料仓库布局图","C02")
+                frmlayout1 = new FormRackLayout("Layout1", "原材料仓库布局图","C02", Issingleshow)
                 {
                     MarkBackColor = Color.FromName(ConfigurationManager.AppSettings["RackMarkBackColor"]),
                     MarkForeColor = Color.FromName(ConfigurationManager.AppSettings["RackMarkForeColor"]),  //KnownColor枚举值
@@ -151,7 +153,7 @@ namespace WHRawManager
         {
             if (frmlayout2 == null || frmlayout2.IsDisposed)
             {
-                frmlayout2 = new FormRackLayout("Layout2", "余料仓库布局图","C02")
+                frmlayout2 = new FormRackLayout("Layout2", "余料仓库布局图","C02", Issingleshow)
                 {
                     MarkBackColor = Color.FromName(ConfigurationManager.AppSettings["RackMarkBackColor"]),
                     MarkForeColor = Color.FromName(ConfigurationManager.AppSettings["RackMarkForeColor"]),  //KnownColor枚举值
@@ -495,6 +497,12 @@ namespace WHRawManager
                 txtc1.Clear();
                 txtc1.Focus();
 
+                if(Issingleshow)
+                {
+                    //把以前的颜色恢复到默认 
+                    frmcurrent.ResetRackCellsDefaultColor("all");
+                }
+
                 //收货库位标注
                 foreach(string raw in rawlist)
                 {
@@ -645,7 +653,16 @@ namespace WHRawManager
         //显示扫描的信息
         private void ShowInfoInDataGridView()
         {
-            string sql = "select Rawsheet as raw, RackID as rack, Sum(Qty) as qty from C02 group by Rawsheet, RackID, TempID order by TempID";
+            string sql = string.Empty;
+            if (Issingleshow)
+            {
+                sql = string.Format("select Rawsheet as raw, RackID as rack, Sum(Qty) as qty from C02 where DelivID={0} group by Rawsheet, RackID, TempID order by TempID", FirstBarID);
+            }
+            else
+            {
+                sql = "select Rawsheet as raw, RackID as rack, Sum(Qty) as qty from C02 group by Rawsheet, RackID, TempID order by TempID";
+            }
+            
             DataTable dt = db.GetDataTable(sql);
             this.dgv.DataSource = dt;
             dgv.Columns[0].FillWeight = 50;
@@ -720,6 +737,10 @@ namespace WHRawManager
             MainForm.formsdic.Remove(this.Name);
             this.Close();
         }
-        
+
+        private void chksingleshow_CheckedChanged(object sender, EventArgs e)
+        {
+            Issingleshow = chksingleshow.Checked;
+        }
     }
 }

@@ -97,7 +97,7 @@ namespace WHRawManager.Controls
             rowcount = rackdt.Rows.Count;
             colcount = rackdt.Columns.Count;
 
-            //查询C01表中已有的原材料
+            //查询已有的原材料
             foreach(DataRow dr in SelectRackdt.Rows)
             {
                 selectdt.Rows.Add(dr[0].ToString(), Convert.ToInt16(dr[1]), Convert.ToInt16(dr[2]));
@@ -268,6 +268,17 @@ namespace WHRawManager.Controls
         {
             this.dgv[col - 1, row - 1].Style.BackColor = QueryMarkBackColor;
             this.dgv[col - 1, row - 1].Style.ForeColor = QueryMarkForeColor;
+        }
+
+        //把已有的库位恢复到默认颜色
+        public void ResetRackCellsDefaultColor()
+        {
+            //先把原来选中的原材料更新颜色到默认
+            foreach (DataRow dr in selectdt.Rows)
+            {
+                SetDefaultCellColor(dr["rackid"].ToString(), (int)dr["row"], (int)dr["column"]);
+            }
+            selectdt.Rows.Clear();
         }
     }
 }

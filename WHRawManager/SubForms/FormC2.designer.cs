@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormC2));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.chksingleshow = new System.Windows.Forms.CheckBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.chksound = new System.Windows.Forms.CheckBox();
             this.button2 = new System.Windows.Forms.Button();
@@ -46,7 +47,6 @@
             this.qty = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panelMap = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.chksingleshow = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -75,6 +75,21 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1157, 87);
             this.panel1.TabIndex = 0;
+            // 
+            // chksingleshow
+            // 
+            this.chksingleshow.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.chksingleshow.AutoSize = true;
+            this.chksingleshow.Checked = true;
+            this.chksingleshow.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chksingleshow.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.chksingleshow.Location = new System.Drawing.Point(1102, 41);
+            this.chksingleshow.Name = "chksingleshow";
+            this.chksingleshow.Size = new System.Drawing.Size(51, 21);
+            this.chksingleshow.TabIndex = 19;
+            this.chksingleshow.Text = "单显";
+            this.chksingleshow.UseVisualStyleBackColor = true;
+            this.chksingleshow.CheckedChanged += new System.EventHandler(this.chksingleshow_CheckedChanged);
             // 
             // pictureBox2
             // 
@@ -269,20 +284,6 @@
             this.splitContainer1.Size = new System.Drawing.Size(1157, 655);
             this.splitContainer1.SplitterDistance = 285;
             this.splitContainer1.TabIndex = 4;
-            // 
-            // chksingleshow
-            // 
-            this.chksingleshow.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.chksingleshow.AutoSize = true;
-            this.chksingleshow.Checked = true;
-            this.chksingleshow.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chksingleshow.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.chksingleshow.Location = new System.Drawing.Point(1102, 41);
-            this.chksingleshow.Name = "chksingleshow";
-            this.chksingleshow.Size = new System.Drawing.Size(51, 21);
-            this.chksingleshow.TabIndex = 19;
-            this.chksingleshow.Text = "单显";
-            this.chksingleshow.UseVisualStyleBackColor = true;
             // 
             // FormC2
             // 

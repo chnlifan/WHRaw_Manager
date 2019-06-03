@@ -19,6 +19,7 @@ namespace WHRawManager
     {
 
          DbHelper db = new DbHelper();
+         bool Issingleshow = false;
 
          string LayID = "";
          Dictionary<string, Rack> rackdic = new Dictionary<string, Rack>();
@@ -39,10 +40,11 @@ namespace WHRawManager
         private double titlex, titley, titlewidth, titleheight;
         private string fromtable;
 
-        public FormRackLayout(string m_layid, string titlename, string fromtable0)
+        public FormRackLayout(string m_layid, string titlename, string fromtable0, bool Singleshow = false)
         {
             InitializeComponent();
             fromtable = fromtable0;
+            Issingleshow = Singleshow;
 
             SetStyle(ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer, true);
 
@@ -146,9 +148,12 @@ namespace WHRawManager
 
                 //货架号原材料对应表
                 DataTable rackrawdt = db.GetDataTable(string.Format("select RackID as name, Rawsheet as name2 from RackRaw where RackName='{0}' and UniqueID=1", name));
-
+                
                 //表中已有原材料(关于此货架)
-                querystr = string.Format("select RackID,RowNo,ColumnNo from {0} where RackName='{1}'", fromtable, name);
+                if(Issingleshow)
+                    querystr = string.Format("select RackID,RowNo,ColumnNo from {0} where RackName='{1}' and 1=2", fromtable, name); //不显示已有原物料的库位
+                else
+                    querystr = string.Format("select RackID,RowNo,ColumnNo from {0} where RackName='{1}'", fromtable, name);  
                 DataTable selectdt = db.GetDataTable(querystr);
 
                 Rack rackone = new Rack(name, rackdt, rackrawdt, selectdt, rwidth, rheight, MarkBackColor, MarkForeColor, QueryMarkBackColor, QueryMarkForeColor, ShowRackName);
@@ -267,6 +272,24 @@ namespace WHRawManager
 
                 Rack rackone = rackdic[name];
                 rackone.RefreshSelectRack(selectdt);
+        }
+
+        //把一个货架的颜色恢复到默认
+        public void ResetRackCellsDefaultColor(string name)
+        {
+            if(name == "all")
+            {
+                foreach (string rackname in rackdic.Keys)
+                {
+                    Rack rackone = rackdic[rackname];
+                    rackone.ResetRackCellsDefaultColor();
+                }
+            }
+            else
+            {
+                Rack rackone = rackdic[name];
+                rackone.ResetRackCellsDefaultColor();
+            }
         }
 
     }
