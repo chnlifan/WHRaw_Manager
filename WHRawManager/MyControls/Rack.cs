@@ -230,7 +230,6 @@ namespace WHRawManager.Controls
             {
                 SetDefaultCellColor(dr["rackid"].ToString(), (int)dr["row"], (int)dr["column"]);
             }
-
             selectdt.Rows.Clear();
 
             foreach (DataRow dr in SelectRackdt.Rows)

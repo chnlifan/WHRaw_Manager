@@ -96,6 +96,7 @@ namespace WHRawManager
                     frm.ShowDataInDgv2();
                     frm.needrefresh = true;
                 }
+                this.Close();
             }
         }
     }

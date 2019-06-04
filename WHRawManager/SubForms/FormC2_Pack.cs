@@ -88,6 +88,7 @@ namespace WHRawManager
                     frm.needrefresh = true;
                 }
             }
+            this.Close();
         }
     }
 }

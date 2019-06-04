@@ -11,6 +11,8 @@ using System.Windows.Forms;
 using System.Configuration;
 using FanNetWorld.Data;
 using System.Media;
+using FanNetWorldDataGridViewEx;
+using FanNetWorld.IO;
 
 namespace WHRawManager
 {
@@ -24,10 +26,11 @@ namespace WHRawManager
         FormRackLayout frmcurrent = null;
         bool IsPlaySound = true;
         int FirstBarID = -1;
+        int CurrentID = -1;
         Panel parentpanel = null;
         bool IsMax = false;
         bool Issingleshow = false;
-
+        int maxrow = Convert.ToInt16(ConfigurationManager.AppSettings["SingleShowMaxRowNum"]);
 
         //用于查询物料位置
         DataTable querydt = null;
@@ -36,6 +39,17 @@ namespace WHRawManager
         int MaxTempID = 0;
 
         static public readonly DataGridViewCellStyle DataCellStyle1 = new DataGridViewCellStyle
+        {
+            Alignment = DataGridViewContentAlignment.MiddleLeft,
+            BackColor = Color.WhiteSmoke,
+            Font = new Font("微软雅黑", (float)(10.0F), FontStyle.Bold, GraphicsUnit.Point),
+            ForeColor = SystemColors.WindowText,
+            SelectionBackColor = Color.WhiteSmoke,
+            SelectionForeColor = SystemColors.WindowText,
+            WrapMode = DataGridViewTriState.False
+        };
+
+        static public readonly DataGridViewCellStyle DataCellStyle2 = new DataGridViewCellStyle
         {
             Alignment = DataGridViewContentAlignment.MiddleLeft,
             BackColor = Color.WhiteSmoke,
@@ -88,8 +102,15 @@ namespace WHRawManager
 
         private void FormC1_Load(object sender, EventArgs e)
         {
-            this.dgv.SetDataGridViewTheme2(false, false, "No", false, false, 32, 25, false, true, false);
-            this.dgv.DefaultCellStyle = DataCellStyle1;
+            if(Issingleshow)
+            {
+                SetSingleShowFormatforDataGridView();
+            }
+            else
+            {
+                this.dgv.SetDataGridViewTheme2(false, false, "No", false, false, 32, 25, false, true, false);
+                this.dgv.DefaultCellStyle = DataCellStyle1;
+            }
 
             SetDataGridViewBase(this.dgv);
             ShowInfoInDataGridView();
@@ -294,6 +315,7 @@ namespace WHRawManager
                 string packid = orderarr[2].Trim();
                 int yearid  = Convert.ToInt16(orderarr[3].Trim());
                 string lot0 = string.Empty;
+                string currentmsg = packid + "  " + (line=="A" ? "自动线":"手动线");
                 
                 //寻找临时的识别号
                 if(FirstBarID == -1)
@@ -306,6 +328,7 @@ namespace WHRawManager
                     {
                         FirstBarID = Convert.ToInt32(db.GetSingleObject(string.Format("select IsNull(Max(DelivID),0) from C02Temp where YearID={0}", yearid))) + 1;
                     }
+                    CurrentID = FirstBarID;
                 }
 
                 //检查格式是否正确
@@ -507,14 +530,17 @@ namespace WHRawManager
                 foreach(string raw in rawlist)
                 {
                     MarkRackPosition(raw, yearid, FirstBarID);
-                }                
+                }
+
+                CurrentID = FirstBarID;
 
                 //更新扫描信息
-                ShowInfoInDataGridView();
+                ShowInfoInDataGridView();                
 
                 FirstBarID++;
 
-                ShowInfoAndSound("扫描成功!");
+                currentmsg = lot0 + "  " + currentmsg;
+                ShowInfoAndSound(currentmsg + " 扫描成功!");
             }
             else
             {
@@ -645,8 +671,8 @@ namespace WHRawManager
             dgv.AllowUserToResizeRows = false;
             dgv.Enabled = false;
             dgv.ReadOnly = true;
-            dgv.Columns[0].FillWeight = 50;
-            dgv.Columns[1].FillWeight = 30;
+            dgv.Columns[0].FillWeight = 55;
+            dgv.Columns[1].FillWeight = 25;
             dgv.Columns[2].FillWeight = 20;
         }
 
@@ -656,7 +682,7 @@ namespace WHRawManager
             string sql = string.Empty;
             if (Issingleshow)
             {
-                sql = string.Format("select Rawsheet as raw, RackID as rack, Sum(Qty) as qty from C02 where DelivID={0} group by Rawsheet, RackID, TempID order by TempID", FirstBarID);
+                sql = string.Format("select Rawsheet as raw, RackID as rack, Sum(Qty) as qty from C02 where DelivID={0} group by Rawsheet, RackID, TempID order by TempID", CurrentID);
             }
             else
             {
@@ -665,8 +691,9 @@ namespace WHRawManager
             
             DataTable dt = db.GetDataTable(sql);
             this.dgv.DataSource = dt;
-            dgv.Columns[0].FillWeight = 50;
-            dgv.Columns[1].FillWeight = 30;
+
+            dgv.Columns[0].FillWeight = 55;
+            dgv.Columns[1].FillWeight = 25;
             dgv.Columns[2].FillWeight = 20;
 
             dgv.CurrentCell = null;
@@ -683,8 +710,16 @@ namespace WHRawManager
             ShowInfoInDataGridView();
 
             //更新货架的选中状态
-            frmlayout1.RefreshShowRacks();
-            frmlayout2.RefreshShowRacks();
+            if(Issingleshow)
+            {
+                frmlayout1.ResetRackCellsDefaultColor("all");
+                frmlayout2.ResetRackCellsDefaultColor("all");
+            }
+            else
+            {
+                frmlayout1.RefreshShowRacks();
+                frmlayout2.RefreshShowRacks();
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -717,6 +752,8 @@ namespace WHRawManager
             this.txtc1.Focus();
 
             IsMax = true;
+
+            SetSingleShowFormatforDataGridView();
         }
 
         //取消最大化
@@ -729,6 +766,7 @@ namespace WHRawManager
                 this.TopMost = false; // 置顶   
                 IsMax = false;               
                 ShowForm(this, parentpanel);
+                SetSingleShowFormatforDataGridView();
             }
         }
 
@@ -741,6 +779,57 @@ namespace WHRawManager
         private void chksingleshow_CheckedChanged(object sender, EventArgs e)
         {
             Issingleshow = chksingleshow.Checked;
+            SetSingleShowFormatforDataGridView();
+        }
+
+        //为单显设置datagridview的字体大小
+        private void SetSingleShowFormatforDataGridView()
+        {
+            if(Issingleshow)
+            {
+                int panelw = 0;
+                int f1w = 0;
+                int f2w = 0;
+                int f3w = 0;
+                int fh = dgv.Height - 32;
+                int ffcw = 1000;
+                fh = (int)(fh/ maxrow);      //单显时控制最大行数为10
+
+                dgv.SetDataGridViewTheme2(false, false, "No", false, false, 32, fh, false, true, false);
+
+                int fontsize = (int)CoolFont.FitStringRect("KM500094471", dgv.DefaultCellStyle.Font, dgv.CreateGraphics(), new Rectangle(0, 0, ffcw, fh));
+                DataCellStyle2.Font = new Font("微软雅黑", fontsize, FontStyle.Bold, GraphicsUnit.Point);
+                dgv.DefaultCellStyle = DataCellStyle2;
+
+                SizeF sf = CoolFont.GetStringSize("KM500094479", dgv.DefaultCellStyle.Font, dgv.CreateGraphics());
+                f1w = (int)sf.Width+5;
+                sf = CoolFont.GetStringSize("YL-18-2", dgv.DefaultCellStyle.Font, dgv.CreateGraphics());
+                f2w = (int)sf.Width+5;
+                sf = CoolFont.GetStringSize("500", dgv.DefaultCellStyle.Font, dgv.CreateGraphics());
+                f3w = (int)sf.Width+5;
+
+                panelw = f1w + f2w + f3w;
+                this.splitContainer1.SplitterDistance = panelw+20;
+                this.panel3.Width = panelw + 18;
+                dgv.Width = panelw + 17;
+
+                SetDataGridViewBase(this.dgv);
+                ShowInfoInDataGridView();
+            }
+            else
+            {
+                this.splitContainer1.SplitterDistance = 284;
+                this.dgv.SetDataGridViewTheme2(false, false, "No", false, false, 32, 25, false, true, false);
+                this.dgv.DefaultCellStyle = DataCellStyle1;
+                SetDataGridViewBase(this.dgv);
+                ShowInfoInDataGridView();
+            }
+        }
+
+        private void panel3_SizeChanged(object sender, EventArgs e)
+        {
+            lblqty.Top = label2.Top;
+            lblqty.Left = label2.Right + 20;
         }
     }
 }

@@ -47,8 +47,8 @@ namespace WHRawManager.Controls
             //设置各控件的大小
             int titleH = Convert.ToInt16(height1 * 1/6);
             int templayH = Convert.ToInt16(height1 * 5/6/3);
-            int tempW = width1 * 3/4;
-            int tempR = width1 * 1/4;
+            int tempW = width1 * 5/8;
+            int tempR = width1 * 3/8;
 
             Vendorlab.Height = titleH;
 
