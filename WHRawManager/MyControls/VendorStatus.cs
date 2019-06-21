@@ -18,14 +18,14 @@ namespace WHRawManager.Controls
 
         public VendorStatus()
         {
-            InitializeComponent();            
+            InitializeComponent();   
         }
 
         public VendorStatus(string vendor, int total, int finish, int nofinish, int width1, int height1,bool delay = false)
         {
             InitializeComponent();
             Venodrstr = vendor;
-            Vendorlab.BackColor = Color.DarkSlateGray;
+            Vendorlab.BackColor = Color.FromArgb(0, 128, 128);
 
             this.Margin = new Padding(10);
 
@@ -101,11 +101,11 @@ namespace WHRawManager.Controls
             //完成  -绿色
             if(total == finish)
             {
-                this.BackColor = Color.LawnGreen;
+                this.BackColor = Color.FromArgb(192, 255, 192);
             }
             else if ((total > finish) && (finish >0)) //部分完成
             {
-                this.BackColor = Color.Yellow;
+                this.BackColor = Color.FromArgb(255,242,0);
             }
             else if (total == nofinish) //未交付
             {
@@ -115,7 +115,7 @@ namespace WHRawManager.Controls
                 }
                 else
                 {
-                    this.BackColor = Color.Pink;   //没有延时 -- 粉色
+                    this.BackColor = Color.FromArgb(255,174, 201);   //没有延时 -- 粉色
                 }                
             }
 

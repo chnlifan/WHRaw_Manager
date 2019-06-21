@@ -222,7 +222,14 @@ namespace WHRawManager
 
         //把数据导入数据库
         private void ImportOrderToDB(string order)
-        {            
+        {
+            bool Isonlydisplay = this.chkonlydisplay.Checked;   //备料的特殊需求, 扫描物料不入账, 只显示
+            if(Isonlydisplay == true)
+            {
+                ImportOrderToDBonlyonlyshow(order);
+                return;
+            }
+
             if(string.IsNullOrEmpty(order))
             {
                 return;
@@ -291,7 +298,7 @@ namespace WHRawManager
             if (orderarr[0] == "C02" || orderarr[0] == "C03" || orderarr[0] == "C04" || orderarr[0] == "C06")
             {
                 string orderid = order;
-
+     
                 //发料时如何定义重复扫描及后补发的料
                 //C02|M|1/8|19|33+A+1|KM51107451|80|33+A+1|ZK11177|100|33+A+1|KM50316504|10                
                 int count = Convert.ToInt16(db.GetSingleObject(string.Format("select count(*) from StoreBar2 where Bar2ID='{0}'", orderid)));
@@ -308,7 +315,7 @@ namespace WHRawManager
                     ShowError("发现重复发料条码,不能重复扫描!");
                     return;
                 }
-                
+
                 //导入C02临时表中
                 string code = orderarr[0].Trim();
                 string line = orderarr[1].Trim();
@@ -316,9 +323,9 @@ namespace WHRawManager
                 int yearid  = Convert.ToInt16(orderarr[3].Trim());
                 string lot0 = string.Empty;
                 string currentmsg = packid + "  " + (line=="A" ? "自动线":"手动线");
-                
+
                 //寻找临时的识别号
-                if(FirstBarID == -1)
+                if (FirstBarID == -1)
                 {
                     if (Convert.ToInt32(db.GetSingleObject(string.Format("select count(*) from C02Temp where YearID={0}", yearid))) == 0)
                     {
@@ -785,7 +792,7 @@ namespace WHRawManager
         //为单显设置datagridview的字体大小
         private void SetSingleShowFormatforDataGridView()
         {
-            if(Issingleshow)
+            if(this.chkbigfont.Checked)
             {
                 int panelw = 0;
                 int f1w = 0;
@@ -830,6 +837,359 @@ namespace WHRawManager
         {
             lblqty.Top = label2.Top;
             lblqty.Left = label2.Right + 20;
+        }
+
+        //只显示数据, 不入账
+        private void ImportOrderToDBonlyonlyshow(string order)
+        {
+            int FirstBarIDonlyshow;
+
+            if (string.IsNullOrEmpty(order))
+            {
+                return;
+            }
+
+            //清空上一次的清单
+            db.ExecuteNonQuery("delete from C02onlyshow");
+
+            string[] orderarr = order.Split('|');
+
+            //可能是物料查询库位置
+            if (orderarr.Length == 1)
+            {
+                //删除上次查询的库位的颜色
+                RemovePreviousQueryCellColor();
+
+                DataTable dt = db.GetDataTable(string.Format("select * from RackRaw where Rawsheet='{0}'", order));
+                if (dt.Rows.Count > 0)    //如果一个材料在多个库位， 只显示一个库位
+                {
+                    string layid = dt.Rows[0]["LayID"].ToString();
+                    string rackname = dt.Rows[0]["RackName"].ToString();
+                    string rackid = dt.Rows[0]["RackID"].ToString();
+                    int rowno = Convert.ToInt16(dt.Rows[0]["RowNo"]);
+                    int colno = Convert.ToInt16(dt.Rows[0]["ColumnNo"]);
+
+                    if (Convert.ToInt16(dt.Rows[0]["FlexibleID"]) == 1) //弹性库位
+                    {
+                        DataTable tempdt = db.GetDataTable(string.Format("select * from RackRaw where RackID='{0}' and UniqueID=1", rackid));
+                        if (tempdt.Rows.Count > 0)
+                        {
+                            rowno = Convert.ToInt16(tempdt.Rows[0]["RowNo"]);
+                            colno = Convert.ToInt16(tempdt.Rows[0]["ColumnNo"]);
+                        }
+                    }
+
+                    if (layid == "Layout1")
+                    {
+                        if (frmcurrent != frmlayout1)
+                        {
+                            ShowLayout1();
+                        }
+                    }
+                    else
+                    {
+                        if (frmcurrent != frmlayout2)
+                        {
+                            ShowLayout2();
+                        }
+                    }
+
+                    frmcurrent.MarkQueryRackPosition(rackname, rackid, rowno, colno);
+
+                    if (querydt.Rows.Count > 0)
+                    {
+                        querydt.Rows.Clear();
+                    }
+                    querydt.Rows.Add(layid, rackname, rackid, rowno, colno);
+
+                    ShowInfoAndSound(string.Format("{0}库位查询成功!", order));
+                }
+                else
+                {
+                    ShowError(string.Format("{0}在库位表中没有此原材料的配置信息", order));
+                }
+                return;
+            }
+
+            //订单格式是否有效
+            if (orderarr[0] == "C02" || orderarr[0] == "C03" || orderarr[0] == "C04" || orderarr[0] == "C06")
+            {
+                string orderid = order;
+
+                //导入C02临时表中
+                string code = orderarr[0].Trim();
+                string line = orderarr[1].Trim();
+                string packid = orderarr[2].Trim();
+                int yearid = Convert.ToInt16(orderarr[3].Trim());
+                string lot0 = string.Empty;
+                string currentmsg = packid + "  " + (line == "A" ? "自动线" : "手动线");
+
+                //寻找临时的识别号
+                FirstBarIDonlyshow = -1;
+
+                //检查格式是否正确
+                if (code == "C03")
+                {
+                    if (((orderarr.Length - 4) % 4) != 0)
+                    {
+                        ShowError("发料条码格式错误!");
+                        return;
+                    }
+                }
+                else
+                {
+                    if (((orderarr.Length - 4) % 3) != 0)
+                    {
+                        ShowError("发料条码格式错误!");
+                        return;
+                    }
+                }
+
+                const string sqlversion = "2005";
+                const int numpergroup = 50;
+                int indexingroup = 0;
+                StringBuilder groupstr = new StringBuilder();
+                List<string> rawlist = new List<string>();
+
+                //导入临时表
+                if (code == "C03")
+                {
+                    for (int i = 4; i < orderarr.Length; i = i + 4)
+                    {
+                        string lot = orderarr[i].ToString();
+                        string raw0 = orderarr[i + 1].ToString();
+                        int qty = Convert.ToInt16(orderarr[i + 2].ToString());
+                        int needqty = Convert.ToInt16(orderarr[i + 3].ToString());
+
+                        lot0 = lot;
+
+                        if (rawlist.IndexOf(raw0) == -1)
+                        {
+                            rawlist.Add(raw0);
+                        }
+
+                        int tempid=1;
+
+                        if (sqlversion != "2005") //以下适用于SQL SERVER >2005
+                        {
+                            groupstr.AppendFormat("('{0}','{1}','{2}', {3}, {4}, '{5}', '{6}', {7} , {8}, '{9}', '{10}'),", code, line, packid, yearid, FirstBarIDonlyshow, lot, raw0, qty, needqty, User.UserID, tempid);
+                            indexingroup = indexingroup + 1;
+
+                            if (indexingroup >= numpergroup)
+                            {
+                                string sql0 = groupstr.ToString().TrimEnd(',');
+                                ImportSqlToTempDB("Insert into C02onlyshow(Code, Line, PackID, YearID, DelivID, Lot, Rawsheet, Qty, NeedQty, UserID, TempID) ", " Values " + sql0);
+                                groupstr.Clear();
+                                indexingroup = 0;
+                            }
+                        }
+
+                        if (sqlversion == "2005")  //以下适用于SQL SERVER 2005
+                        {
+                            groupstr.AppendFormat("select '{0}','{1}','{2}', {3}, {4}, '{5}', '{6}', {7} , {8}, '{9}', '{10}' union all ", code, line, packid, yearid, FirstBarIDonlyshow, lot, raw0, qty, needqty, User.UserID, tempid);
+                            indexingroup = indexingroup + 1;
+                            if (indexingroup >= numpergroup)
+                            {
+                                string sql0 = groupstr.ToString();
+                                sql0 = sql0.Substring(0, sql0.Length - 10);
+                                ImportSqlToTempDB("Insert into C02onlyshow(Code, Line, PackID, YearID, DelivID, Lot, Rawsheet, Qty, NeedQty, UserID, TempID) ", sql0);
+                                groupstr.Clear();
+                                indexingroup = 0;
+                            }
+                        }
+                    }
+
+                    if (sqlversion != "2005") //以下适用于SQL SERVER >2005
+                    {
+                        if (groupstr.Length > 0)
+                        {
+                            string sql0 = groupstr.ToString().TrimEnd(',');
+                            ImportSqlToTempDB("Insert into C02onlyshow(Code, Line, PackID, YearID, DelivID, Lot, Rawsheet, Qty, NeedQty, UserID, TempID) ", " Values " + sql0);
+                            groupstr.Clear();
+                        }
+                    }
+
+                    //以下适用于SQL SERVER 2005
+                    if (sqlversion == "2005")
+                    {
+                        if (groupstr.Length > 0)
+                        {
+                            string sql0 = groupstr.ToString();
+                            sql0 = sql0.Substring(0, sql0.Length - 10);
+                            ImportSqlToTempDB("Insert into C02onlyshow(Code, Line, PackID, YearID, DelivID, Lot, Rawsheet, Qty, NeedQty, UserID, TempID) ", sql0);
+                            groupstr.Clear();
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = 4; i < orderarr.Length; i = i + 3)
+                    {
+                        string lot = orderarr[i].ToString();
+                        string raw0 = orderarr[i + 1].ToString();
+                        int qty = Convert.ToInt16(orderarr[i + 2].ToString());
+
+                        lot0 = lot;
+
+                        if (rawlist.IndexOf(raw0) == -1)
+                        {
+                            rawlist.Add(raw0);
+                        }
+
+                        int tempid=1;
+
+                        if (sqlversion != "2005") //以下适用于SQL SERVER >2005
+                        {
+                            groupstr.AppendFormat("('{0}','{1}','{2}', {3}, {4}, '{5}', '{6}', {7} , '{8}', '{9}'),", code, line, packid, yearid, FirstBarIDonlyshow, lot, raw0, qty, User.UserID, tempid);
+                            indexingroup = indexingroup + 1;
+
+                            if (indexingroup >= numpergroup)
+                            {
+                                string sql0 = groupstr.ToString().TrimEnd(',');
+                                ImportSqlToTempDB("Insert into C02onlyshow(Code, Line, PackID, YearID, DelivID, Lot, Rawsheet, Qty, UserID, TempID) ", " Values " + sql0);
+                                groupstr.Clear();
+                                indexingroup = 0;
+                            }
+                        }
+
+                        if (sqlversion == "2005")  //以下适用于SQL SERVER 2005
+                        {
+                            groupstr.AppendFormat("select '{0}','{1}','{2}', {3}, {4}, '{5}', '{6}', {7} , '{8}', '{9}' union all ", code, line, packid, yearid, FirstBarIDonlyshow, lot, raw0, qty, User.UserID, tempid);
+                            indexingroup = indexingroup + 1;
+                            if (indexingroup >= numpergroup)
+                            {
+                                string sql0 = groupstr.ToString();
+                                sql0 = sql0.Substring(0, sql0.Length - 10);
+                                ImportSqlToTempDB("Insert into C02onlyshow(Code, Line,PackID, YearID, DelivID, Lot, Rawsheet, Qty, UserID, TempID) ", sql0);
+                                groupstr.Clear();
+                                indexingroup = 0;
+                            }
+                        }
+                    }
+
+                    if (sqlversion != "2005") //以下适用于SQL SERVER >2005
+                    {
+                        if (groupstr.Length > 0)
+                        {
+                            string sql0 = groupstr.ToString().TrimEnd(',');
+                            ImportSqlToTempDB("Insert into C02onlyshow(Code, Line, PackID, YearID, DelivID, Lot, Rawsheet, Qty, UserID, TempID) ", " Values " + sql0);
+                            groupstr.Clear();
+                        }
+                    }
+
+                    //以下适用于SQL SERVER 2005
+                    if (sqlversion == "2005")
+                    {
+                        if (groupstr.Length > 0)
+                        {
+                            string sql0 = groupstr.ToString();
+                            sql0 = sql0.Substring(0, sql0.Length - 10);
+                            ImportSqlToTempDB("Insert into C02onlyshow(Code, Line, PackID, YearID, DelivID, Lot, Rawsheet, Qty, UserID, TempID) ", sql0);
+                            groupstr.Clear();
+                        }
+                    }
+                }
+
+                txtc1.Clear();
+                txtc1.Focus();
+
+                if (Issingleshow)
+                {
+                    //把以前的颜色恢复到默认 
+                    frmcurrent.ResetRackCellsDefaultColor("all");
+                }
+
+                //收货库位标注
+                foreach (string raw in rawlist)
+                {
+                    MarkRackPositionlyshow(raw, yearid, FirstBarIDonlyshow);
+                }
+
+                //更新扫描信息
+                ShowInfoInDataGridViewonlyshow();
+                ShowInfoAndSound("只显示, 不入账！！！");
+            }
+            else
+            {
+                ShowError("无效的订单格式！");
+                return;
+            }
+        }
+
+        private void MarkRackPositionlyshow(string raw, int yearid, int delivid)
+        {
+            string sql = string.Format("select * from RackRaw where Rawsheet='{0}'", raw);
+            DataTable dt = db.GetDataTable(sql);
+            if (dt.Rows.Count > 0)    //如果一个材料在多个库位， 只显示一个库位
+            {
+                string layid = dt.Rows[0]["LayID"].ToString();
+                string rackname = dt.Rows[0]["RackName"].ToString();
+                string rackid = dt.Rows[0]["RackID"].ToString();
+                int rowno = Convert.ToInt16(dt.Rows[0]["RowNo"]);
+                int colno = Convert.ToInt16(dt.Rows[0]["ColumnNo"]);
+
+                if (Convert.ToInt16(dt.Rows[0]["FlexibleID"]) == 1) //弹性库位
+                {
+                    DataTable tempdt = db.GetDataTable(string.Format("select * from RackRaw where RackID='{0}' and UniqueID=1", rackid));
+                    if (tempdt.Rows.Count > 0)
+                    {
+                        rowno = Convert.ToInt16(tempdt.Rows[0]["RowNo"]);
+                        colno = Convert.ToInt16(tempdt.Rows[0]["ColumnNo"]);
+                    }
+                }
+
+                //更新C02 RackID字段
+                db.ExecuteNonQuery(string.Format("Update C02onlyshow set RackName='{0}',RackID='{1}',RowNo={2},ColumnNo={3} where YearID={4} and DelivID={5} and Rawsheet='{6}'", rackname, rackid, rowno, colno, yearid, delivid, raw));
+
+                if (layid == "Layout1")
+                {
+                    if (frmcurrent != frmlayout1)
+                    {
+                        ShowLayout1();
+                    }
+                }
+                else
+                {
+                    if (frmcurrent != frmlayout2)
+                    {
+                        ShowLayout2();
+                    }
+                }
+
+                frmcurrent.MarkRackPosition(rackname, rackid, rowno, colno);
+            }
+        }
+
+        private void ShowInfoInDataGridViewonlyshow()
+        {
+            string sql = string.Empty;
+            if (Issingleshow)
+            {
+                sql = string.Format("select Rawsheet as raw, RackID as rack, Qty as qty from C02onlyshow");
+            }
+            else
+            {
+                sql = "select Rawsheet as raw, RackID as rack, Qty as qty from C02onlyshow";
+            }
+
+            DataTable dt = db.GetDataTable(sql);
+            this.dgv.DataSource = dt;
+
+            dgv.Columns[0].FillWeight = 55;
+            dgv.Columns[1].FillWeight = 25;
+            dgv.Columns[2].FillWeight = 20;
+
+            dgv.CurrentCell = null;
+            dgv.ClearSelection();
+            dgv.Enabled = false;
+            dgv.ReadOnly = true;
+
+            this.lblqty.Text = (db.GetSingleObject("select IsNull(sum(Qty),0) from C02onlyshow")).ToString();
+        }
+
+        private void chkbigfont_CheckedChanged(object sender, EventArgs e)
+        {
+            SetSingleShowFormatforDataGridView();
         }
     }
 }

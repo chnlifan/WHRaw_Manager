@@ -18,6 +18,7 @@ namespace WHRawManager
     {
 
         DbHelper db = new DbHelper();
+        DataTable noscandt = new DataTable();
         SoundPlayer player = new SoundPlayer();
         FormRackLayout frmlayout1 = null;
         FormRackLayout frmlayout2 = null;
@@ -66,7 +67,10 @@ namespace WHRawManager
             }
 
             CreateQueryTable();
-            
+
+            //不扫描物料表
+            noscandt = db.GetDataTable("select Raw from NoScan");
+
         }
         
         private  void CreateQueryTable()
@@ -309,6 +313,13 @@ namespace WHRawManager
                     raw = orderarr[3].Trim();
                     Qty = Convert.ToInt16(orderarr[4]);
                     packid = orderarr[5].Trim();
+
+                    if(noscandt.Select(string.Format("Raw = '{0}'",raw)).Length == 1)
+                    {
+                        ShowError(raw + "不在扫描范围内");
+                        return;
+                    }
+
                     int tempid;
                     if (RawOrderdic.ContainsKey(raw))
                     {

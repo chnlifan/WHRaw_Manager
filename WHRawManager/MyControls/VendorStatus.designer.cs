@@ -39,7 +39,7 @@
             // 
             // Vendorlab
             // 
-            this.Vendorlab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.Vendorlab.BackColor = System.Drawing.Color.Teal;
             this.Vendorlab.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Vendorlab.Dock = System.Windows.Forms.DockStyle.Top;
             this.Vendorlab.Font = new System.Drawing.Font("宋体", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));

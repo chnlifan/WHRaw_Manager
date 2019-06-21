@@ -54,9 +54,13 @@ namespace WHRawManager
             {
                 cat = "('C06')";
             }
-            else if (radioButton5.Checked)
+            else if(radioButton5.Checked)
             {
-                cat = "('C02','C03','C04','C06')";
+                cat = "('C100')";
+            }
+            else if (radioButton6.Checked)
+            {
+                cat = "('C02','C03','C04','C06','C100')";
             }
 
             string sql = string.Format(@"select YearID as Year, Code, Lot,
@@ -94,9 +98,13 @@ namespace WHRawManager
             {
                 cat = "('C06')";
             }
-            else if (radioButton5.Checked)
+            else if(radioButton5.Checked)
             {
-                cat = "('C02','C03','C04','C06')";
+                cat = "('C100')";
+            }
+            else if (radioButton6.Checked)
+            {
+                cat = "('C02','C03','C04','C06','C100')";
             }
 
             string sql = string.Format(@"select YearID as Year, Code,Rawsheet as Material, sum(-Qty) as 发货量, Isnull(sum(-NeedQty),sum(-Qty)) as 实需量

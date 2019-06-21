@@ -61,6 +61,10 @@ namespace WHRawManager
                 sqlstr = "select KeyID, Code, Rawsheet as Material, Qty, InputTime, UserID from [dbo].[Store] ";
                 wherestr = string.Format(" where Code='C100' and UserID='{0}' and DateDiff(day,[InputTime],'{1}')=0",User.UserID,DateTime.Now.ToString("yyyy-MM-dd"));
             }
+            else if(this.rdtable7.Checked)
+            {
+                tablename = "NoScan";
+            }
 
             if (!string.IsNullOrEmpty(tablename))
             {

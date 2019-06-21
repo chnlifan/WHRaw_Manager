@@ -61,7 +61,8 @@
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.panel1.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.panel1.BackgroundImage = global::WHRawManager.Properties.Resources.bj;
             this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.lblinfo);
@@ -70,18 +71,19 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1068, 83);
+            this.panel1.Size = new System.Drawing.Size(1112, 83);
             this.panel1.TabIndex = 1;
             // 
             // lblinfo
             // 
             this.lblinfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblinfo.BackColor = System.Drawing.Color.Transparent;
             this.lblinfo.Font = new System.Drawing.Font("微软雅黑", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.lblinfo.ForeColor = System.Drawing.Color.Black;
             this.lblinfo.Location = new System.Drawing.Point(275, 5);
             this.lblinfo.Name = "lblinfo";
-            this.lblinfo.Size = new System.Drawing.Size(792, 71);
+            this.lblinfo.Size = new System.Drawing.Size(836, 71);
             this.lblinfo.TabIndex = 3;
             this.lblinfo.Text = "提示信息";
             this.lblinfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -89,6 +91,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("微软雅黑", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label1.Location = new System.Drawing.Point(94, 14);
             this.label1.Name = "label1";
@@ -122,7 +125,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 83);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1068, 656);
+            this.panel2.Size = new System.Drawing.Size(1112, 656);
             this.panel2.TabIndex = 2;
             // 
             // lblokqty
@@ -154,7 +157,7 @@
             this.chkshouhuo.Checked = true;
             this.chkshouhuo.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkshouhuo.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.chkshouhuo.Location = new System.Drawing.Point(955, 636);
+            this.chkshouhuo.Location = new System.Drawing.Point(999, 636);
             this.chkshouhuo.Name = "chkshouhuo";
             this.chkshouhuo.Size = new System.Drawing.Size(115, 16);
             this.chkshouhuo.TabIndex = 16;
@@ -235,7 +238,7 @@
             this.dgv2.Name = "dgv2";
             this.dgv2.RowTemplate.Height = 23;
             this.dgv2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dgv2.Size = new System.Drawing.Size(1068, 530);
+            this.dgv2.Size = new System.Drawing.Size(1112, 530);
             this.dgv2.TabIndex = 14;
             this.dgv2.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv2_CellDoubleClick);
             this.dgv2.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgv2_CellFormatting);
@@ -329,7 +332,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1068, 739);
+            this.ClientSize = new System.Drawing.Size(1112, 739);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;

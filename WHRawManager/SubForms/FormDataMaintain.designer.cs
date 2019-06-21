@@ -39,6 +39,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.rdtable7 = new System.Windows.Forms.RadioButton();
             this.rdtable6 = new System.Windows.Forms.RadioButton();
             this.rdtable5 = new System.Windows.Forms.RadioButton();
             this.rdtable4 = new System.Windows.Forms.RadioButton();
@@ -60,7 +61,9 @@
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.panel1.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.panel1.BackgroundImage = global::WHRawManager.Properties.Resources.bj;
+            this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.lblinfo);
             this.panel1.Controls.Add(this.pictureBox2);
@@ -77,6 +80,7 @@
             this.lblinfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblinfo.BackColor = System.Drawing.Color.Transparent;
             this.lblinfo.Font = new System.Drawing.Font("微软雅黑", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.lblinfo.ForeColor = System.Drawing.Color.Lime;
             this.lblinfo.Location = new System.Drawing.Point(297, 15);
@@ -88,6 +92,7 @@
             // pictureBox2
             // 
             this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox2.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
             this.pictureBox2.Location = new System.Drawing.Point(932, 0);
             this.pictureBox2.Name = "pictureBox2";
@@ -100,6 +105,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("微软雅黑", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label1.Location = new System.Drawing.Point(95, 16);
             this.label1.Name = "label1";
@@ -134,7 +140,7 @@
             this.button2.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.button2.Image = ((System.Drawing.Image)(resources.GetObject("button2.Image")));
             this.button2.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.button2.Location = new System.Drawing.Point(32, 368);
+            this.button2.Location = new System.Drawing.Point(32, 418);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(114, 73);
             this.button2.TabIndex = 1;
@@ -149,7 +155,7 @@
             this.button1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
             this.button1.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.button1.Location = new System.Drawing.Point(32, 274);
+            this.button1.Location = new System.Drawing.Point(32, 324);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(114, 73);
             this.button1.TabIndex = 0;
@@ -161,6 +167,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.rdtable7);
             this.groupBox1.Controls.Add(this.rdtable6);
             this.groupBox1.Controls.Add(this.rdtable5);
             this.groupBox1.Controls.Add(this.rdtable4);
@@ -169,16 +176,27 @@
             this.groupBox1.Controls.Add(this.rdtable1);
             this.groupBox1.Location = new System.Drawing.Point(13, 13);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(178, 238);
+            this.groupBox1.Size = new System.Drawing.Size(178, 277);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "数据表";
+            // 
+            // rdtable7
+            // 
+            this.rdtable7.AutoSize = true;
+            this.rdtable7.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.rdtable7.Location = new System.Drawing.Point(13, 238);
+            this.rdtable7.Name = "rdtable7";
+            this.rdtable7.Size = new System.Drawing.Size(134, 23);
+            this.rdtable7.TabIndex = 6;
+            this.rdtable7.Text = "7 - 不扫描原材料";
+            this.rdtable7.UseVisualStyleBackColor = true;
             // 
             // rdtable6
             // 
             this.rdtable6.AutoSize = true;
             this.rdtable6.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.rdtable6.Location = new System.Drawing.Point(13, 199);
+            this.rdtable6.Location = new System.Drawing.Point(13, 203);
             this.rdtable6.Name = "rdtable6";
             this.rdtable6.Size = new System.Drawing.Size(134, 23);
             this.rdtable6.TabIndex = 5;
@@ -189,7 +207,7 @@
             // 
             this.rdtable5.AutoSize = true;
             this.rdtable5.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.rdtable5.Location = new System.Drawing.Point(13, 165);
+            this.rdtable5.Location = new System.Drawing.Point(13, 168);
             this.rdtable5.Name = "rdtable5";
             this.rdtable5.Size = new System.Drawing.Size(106, 23);
             this.rdtable5.TabIndex = 4;
@@ -200,7 +218,7 @@
             // 
             this.rdtable4.AutoSize = true;
             this.rdtable4.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.rdtable4.Location = new System.Drawing.Point(13, 131);
+            this.rdtable4.Location = new System.Drawing.Point(13, 133);
             this.rdtable4.Name = "rdtable4";
             this.rdtable4.Size = new System.Drawing.Size(162, 23);
             this.rdtable4.TabIndex = 3;
@@ -211,7 +229,7 @@
             // 
             this.rdtable3.AutoSize = true;
             this.rdtable3.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.rdtable3.Location = new System.Drawing.Point(13, 97);
+            this.rdtable3.Location = new System.Drawing.Point(13, 98);
             this.rdtable3.Name = "rdtable3";
             this.rdtable3.Size = new System.Drawing.Size(120, 23);
             this.rdtable3.TabIndex = 2;
@@ -307,5 +325,6 @@
         private System.Windows.Forms.BindingSource bindingSource1;
         private System.Windows.Forms.Label lblinfo;
         private System.Windows.Forms.RadioButton rdtable6;
+        private System.Windows.Forms.RadioButton rdtable7;
     }
 }

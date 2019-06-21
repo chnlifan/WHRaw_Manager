@@ -26,9 +26,9 @@ namespace WHRawManager
 
         private void SetMarkColor()
         {
-            markok.BackColor = Color.LawnGreen;
-            markpart.BackColor = Color.Yellow;
-            markno.BackColor = Color.Pink;
+            markok.BackColor = Color.FromArgb(192, 255, 192);
+            markpart.BackColor = Color.FromArgb(255, 242, 0);
+            markno.BackColor = Color.FromArgb(255, 174, 201);
             marklate.BackColor = Color.Red;
          }
         

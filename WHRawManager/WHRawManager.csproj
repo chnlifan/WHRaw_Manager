@@ -223,6 +223,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="SubForms\FormC1.resx">
       <DependentUpon>FormC1.cs</DependentUpon>
@@ -295,6 +296,7 @@
     <Content Include="Images\close.png" />
     <Content Include="Images\db.png" />
     <Content Include="Images\edit.png" />
+    <Content Include="Images\export32x32 24-bit.png" />
     <Content Include="Images\hidden.png" />
     <Content Include="Images\info.png" />
     <Content Include="Images\koneback.jpg" />
@@ -324,7 +326,7 @@
     <Content Include="Sound\ok.wav" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\ProgramLife\程序编程\项目开发\%28我的Net类世界集合%29\FanNetWorld\FanNetWorld\FanNetWorld.csproj">
+    <ProjectReference Include="..\..\..\..\..\%28我的Net类世界集合%29\FanNetWorld\FanNetWorld\FanNetWorld.csproj">
       <Project>{bd3f5cae-f35b-417d-9b9f-e176cf32f1d7}</Project>
       <Name>FanNetWorld</Name>
     </ProjectReference>

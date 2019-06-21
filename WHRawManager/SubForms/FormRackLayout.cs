@@ -46,6 +46,11 @@ namespace WHRawManager
             fromtable = fromtable0;
             Issingleshow = Singleshow;
 
+            if(fromtable0 == "C02")
+            {
+                this.BackColor = Color.FromArgb(0,176,80);
+            }
+
             SetStyle(ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer, true);
 
             if(m_layid == "Layout1")

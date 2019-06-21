@@ -30,6 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormC2));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.chkbigfont = new System.Windows.Forms.CheckBox();
+            this.chkonlydisplay = new System.Windows.Forms.CheckBox();
             this.chksingleshow = new System.Windows.Forms.CheckBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.chksound = new System.Windows.Forms.CheckBox();
@@ -60,9 +62,12 @@
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.panel1.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.panel1.BackgroundImage = global::WHRawManager.Properties.Resources.bj;
             this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.chkbigfont);
+            this.panel1.Controls.Add(this.chkonlydisplay);
             this.panel1.Controls.Add(this.chksingleshow);
             this.panel1.Controls.Add(this.pictureBox2);
             this.panel1.Controls.Add(this.chksound);
@@ -76,28 +81,59 @@
             this.panel1.Size = new System.Drawing.Size(1157, 87);
             this.panel1.TabIndex = 0;
             // 
+            // chkbigfont
+            // 
+            this.chkbigfont.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkbigfont.AutoSize = true;
+            this.chkbigfont.BackColor = System.Drawing.Color.Transparent;
+            this.chkbigfont.Checked = true;
+            this.chkbigfont.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkbigfont.Font = new System.Drawing.Font("微软雅黑", 7.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.chkbigfont.Location = new System.Drawing.Point(1063, 64);
+            this.chkbigfont.Name = "chkbigfont";
+            this.chkbigfont.Size = new System.Drawing.Size(66, 19);
+            this.chkbigfont.TabIndex = 21;
+            this.chkbigfont.Text = "字体加大";
+            this.chkbigfont.UseVisualStyleBackColor = false;
+            this.chkbigfont.CheckedChanged += new System.EventHandler(this.chkbigfont_CheckedChanged);
+            // 
+            // chkonlydisplay
+            // 
+            this.chkonlydisplay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkonlydisplay.AutoSize = true;
+            this.chkonlydisplay.BackColor = System.Drawing.Color.Transparent;
+            this.chkonlydisplay.Font = new System.Drawing.Font("微软雅黑", 7.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.chkonlydisplay.Location = new System.Drawing.Point(1062, 39);
+            this.chkonlydisplay.Name = "chkonlydisplay";
+            this.chkonlydisplay.Size = new System.Drawing.Size(86, 19);
+            this.chkonlydisplay.TabIndex = 20;
+            this.chkonlydisplay.Text = "只显示不入账";
+            this.chkonlydisplay.UseVisualStyleBackColor = false;
+            // 
             // chksingleshow
             // 
             this.chksingleshow.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.chksingleshow.AutoSize = true;
+            this.chksingleshow.BackColor = System.Drawing.Color.Transparent;
             this.chksingleshow.Checked = true;
             this.chksingleshow.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chksingleshow.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.chksingleshow.Location = new System.Drawing.Point(1102, 41);
+            this.chksingleshow.Font = new System.Drawing.Font("微软雅黑", 7.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.chksingleshow.Location = new System.Drawing.Point(993, 65);
             this.chksingleshow.Name = "chksingleshow";
-            this.chksingleshow.Size = new System.Drawing.Size(51, 21);
+            this.chksingleshow.Size = new System.Drawing.Size(66, 19);
             this.chksingleshow.TabIndex = 19;
-            this.chksingleshow.Text = "单显";
-            this.chksingleshow.UseVisualStyleBackColor = true;
+            this.chksingleshow.Text = "单批显示";
+            this.chksingleshow.UseVisualStyleBackColor = false;
             this.chksingleshow.CheckedChanged += new System.EventHandler(this.chksingleshow_CheckedChanged);
             // 
             // pictureBox2
             // 
             this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox2.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(1119, 4);
+            this.pictureBox2.Location = new System.Drawing.Point(1114, 4);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(30, 28);
+            this.pictureBox2.Size = new System.Drawing.Size(35, 31);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox2.TabIndex = 18;
             this.pictureBox2.TabStop = false;
@@ -107,29 +143,32 @@
             // 
             this.chksound.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.chksound.AutoSize = true;
+            this.chksound.BackColor = System.Drawing.Color.Transparent;
             this.chksound.Checked = true;
             this.chksound.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chksound.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.chksound.Location = new System.Drawing.Point(1102, 65);
+            this.chksound.Font = new System.Drawing.Font("微软雅黑", 7.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.chksound.Location = new System.Drawing.Point(1062, 12);
             this.chksound.Name = "chksound";
-            this.chksound.Size = new System.Drawing.Size(51, 21);
+            this.chksound.Size = new System.Drawing.Size(46, 19);
             this.chksound.TabIndex = 17;
             this.chksound.Text = "音效";
-            this.chksound.UseVisualStyleBackColor = true;
+            this.chksound.UseVisualStyleBackColor = false;
             this.chksound.CheckedChanged += new System.EventHandler(this.chksound_CheckedChanged);
             // 
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.button2.Font = new System.Drawing.Font("宋体", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button2.Image = ((System.Drawing.Image)(resources.GetObject("button2.Image")));
+            this.button2.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.button2.Image = global::WHRawManager.Properties.Resources.export32x32_24_bit;
             this.button2.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.button2.Location = new System.Drawing.Point(1013, -1);
+            this.button2.Location = new System.Drawing.Point(989, 4);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(83, 87);
+            this.button2.Size = new System.Drawing.Size(66, 58);
             this.button2.TabIndex = 16;
             this.button2.Text = "过账";
+            this.button2.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
@@ -139,21 +178,23 @@
             this.lblinfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblinfo.BackColor = System.Drawing.Color.Transparent;
             this.lblinfo.Font = new System.Drawing.Font("微软雅黑", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.lblinfo.ForeColor = System.Drawing.Color.Black;
-            this.lblinfo.Location = new System.Drawing.Point(282, 6);
+            this.lblinfo.Location = new System.Drawing.Point(294, 5);
             this.lblinfo.Name = "lblinfo";
-            this.lblinfo.Size = new System.Drawing.Size(705, 74);
+            this.lblinfo.Size = new System.Drawing.Size(683, 74);
             this.lblinfo.TabIndex = 3;
             this.lblinfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("微软雅黑", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(106, 18);
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Font = new System.Drawing.Font("微软雅黑", 42F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Location = new System.Drawing.Point(103, 4);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(90, 46);
+            this.label1.Size = new System.Drawing.Size(144, 75);
             this.label1.TabIndex = 1;
             this.label1.Text = "发料";
             this.label1.Click += new System.EventHandler(this.label1_Click);
@@ -335,5 +376,7 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.CheckBox chksingleshow;
         private System.Windows.Forms.Label lblqty;
+        private System.Windows.Forms.CheckBox chkonlydisplay;
+        private System.Windows.Forms.CheckBox chkbigfont;
     }
 }
