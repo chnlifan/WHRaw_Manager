@@ -162,7 +162,7 @@ namespace WHRawManager
                     MarkForeColor = Color.FromName(ConfigurationManager.AppSettings["RackMarkForeColor"]),  //KnownColor枚举值
                     QueryMarkBackColor = Color.FromName(ConfigurationManager.AppSettings["QueryRackMarkBackColor"]),
                     QueryMarkForeColor = Color.FromName(ConfigurationManager.AppSettings["QueryRackMarkForeColor"])
-                };
+                }; 
             }
             frmcurrent = frmlayout2;
             ShowForm(frmcurrent, this.panelMap);

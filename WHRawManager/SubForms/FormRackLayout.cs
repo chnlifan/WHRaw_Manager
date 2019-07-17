@@ -11,6 +11,7 @@ using System.Configuration;
 using WHRawManager.Controls;
 using FanNetWorld.Data;
 using FanNetWorld.IO;
+using FanNetWorld.Office;
 
 
 namespace WHRawManager
@@ -46,9 +47,9 @@ namespace WHRawManager
             fromtable = fromtable0;
             Issingleshow = Singleshow;
 
-            if(fromtable0 == "C02")
+            if(m_layid == "Layout2")
             {
-                this.BackColor = Color.FromArgb(0,176,80);
+                this.BackColor = ColorConvert2.ColorHextoRGB(ConfigurationManager.AppSettings["Ware2color"]);
             }
 
             SetStyle(ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer, true);

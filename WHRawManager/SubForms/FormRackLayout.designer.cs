@@ -55,7 +55,7 @@
             this.Text = "库位图";
             this.Load += new System.EventHandler(this.FormRackLayout_Load);
             this.Resize += new System.EventHandler(this.FormRackLayout_Resize);
-            this.ResumeLayout(false);
+            //this.ResumeLayout(false);
             this.PerformLayout();
 
         }

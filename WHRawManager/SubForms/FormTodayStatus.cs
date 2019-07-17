@@ -21,7 +21,9 @@ namespace WHRawManager
 
         public FormTodayStatus()
         {
-            InitializeComponent();            
+            InitializeComponent();
+            chartpanel.Visible = false;
+            flowLayoutPanel1.Visible = true;
         }
 
         private void SetMarkColor()
@@ -48,6 +50,7 @@ namespace WHRawManager
             string todaystr = DateTime.Now.ToString("yyyy-MM-dd");
             DataTable dt = GetStatusTable(todaystr);
             DrawStatus(dt);
+            DrawPieStatus(dt);
         }
 
         private DataTable GetStatusTable(string datetimestr)
@@ -120,6 +123,57 @@ namespace WHRawManager
                     vsdic.Add(dr["Vendor"].ToString(), vst);
                 }
             }
+        }
+
+        private void DrawPieStatus(DataTable dt)
+        {
+            double finishnum = 0;
+            double waitnum = 0;
+            double delaynum = 0;
+            double finp = 0;
+            double waitp = 0;
+            double delayp = 0;
+
+            foreach(DataRow dr in dt.Rows)
+            {
+                finishnum += (int)dr["finishKM"];
+                if ((int)dr["Secondfromgreen"] > 0)
+                {
+                    waitnum += (int)dr["partKM"] + (int)dr["noneKM"];     //待交货
+                }
+                else
+                {
+                    delaynum += (int)dr["partKM"] + (int)dr["noneKM"];   //延期
+                }
+            }
+
+            if (finishnum + waitnum + delaynum >0)
+            {
+                finp = Math.Round(finishnum / (finishnum + waitnum + delaynum), 2)*100;
+                waitp = Math.Round(waitnum/(finishnum + waitnum + delaynum), 2)*100;
+                delayp = 100 - finp - waitp;
+                chart1.Visible = true;
+            }
+            else
+            {
+                chart1.Visible = false;
+                return;
+            }
+
+            List<string> xData = new List<string>() { "当日已交付种类", "当日待交付种类", "当日已延期种类"};
+            List<double?> yData = new List<double?>() { finp == 0 ? (double?)null : finp, waitp==0 ? (double?)null : waitp, delayp==0 ? (double?)null : delayp };
+
+            chart1.Series[0].CustomProperties = "DoughnutRadius=60, PieLabelStyle=Disabled, PieDrawingStyle=SoftEdge";
+            chart1.Series[0]["PieLabelStyle"] = "Outside";//将文字移到外侧
+            chart1.Series[0]["PieLineColor"] = "Black";//绘制黑色的连线。
+
+            chart1.Series[0].Label = "#PERCENT{P}";  //显示百分比
+            chart1.Series[0].LegendText = "#VALX";   //显示X名称
+
+            chart1.Series[0].Points.DataBindXY(xData, yData);
+            chart1.Series[0].Points[0].Color = Color.FromArgb(192, 255, 192);
+            chart1.Series[0].Points[1].Color = Color.FromArgb(255, 174, 201);
+            chart1.Series[0].Points[2].Color = Color.Red;
         }
 
 
@@ -202,6 +256,7 @@ namespace WHRawManager
                 ShowForm(this, parentpanel);
                 IsMax = false;
                 timer1.Enabled = false;
+                timer1.Enabled = true;
             }
         }
 
@@ -228,11 +283,34 @@ namespace WHRawManager
         private void label1_Click(object sender, EventArgs e)
         {
             timer1.Enabled = true;
+            timer2.Enabled = true;
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
             UpdateStatus();
+        }
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            if(flowLayoutPanel1.Visible)
+            {
+                flowLayoutPanel1.Visible = false;
+                markok.Visible = false;
+                markpart.Visible = false;
+                marklate.Visible = false;
+                markno.Visible = false;
+                chartpanel.Visible = true;
+            }
+            else
+            {
+                flowLayoutPanel1.Visible = true;
+                markok.Visible = true;
+                markpart.Visible = true;
+                marklate.Visible = true;
+                markno.Visible = true;
+                chartpanel.Visible = false;
+            }
         }
     }
 }

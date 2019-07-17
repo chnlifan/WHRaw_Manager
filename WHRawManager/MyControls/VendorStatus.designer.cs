@@ -58,7 +58,7 @@
             this.lbltotalkm.Name = "lbltotalkm";
             this.lbltotalkm.Size = new System.Drawing.Size(185, 22);
             this.lbltotalkm.TabIndex = 1;
-            this.lbltotalkm.Text = "KM种类数量_总数：";
+            this.lbltotalkm.Text = "当日应交付种类：";
             this.lbltotalkm.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblfinishkm
@@ -68,7 +68,7 @@
             this.lblfinishkm.Name = "lblfinishkm";
             this.lblfinishkm.Size = new System.Drawing.Size(185, 22);
             this.lblfinishkm.TabIndex = 5;
-            this.lblfinishkm.Text = "KM种类数量_完成：";
+            this.lblfinishkm.Text = "当日已交付种类：";
             this.lblfinishkm.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblnofinkm
@@ -78,7 +78,7 @@
             this.lblnofinkm.Name = "lblnofinkm";
             this.lblnofinkm.Size = new System.Drawing.Size(185, 22);
             this.lblnofinkm.TabIndex = 7;
-            this.lblnofinkm.Text = "KM种类数量_未完：";
+            this.lblnofinkm.Text = "当日待交付种类：";
             this.lblnofinkm.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lbltotalkmqty

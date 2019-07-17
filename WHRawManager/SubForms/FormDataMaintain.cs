@@ -52,7 +52,10 @@ namespace WHRawManager
             else if (this.rdtable3.Checked)
                 tablename = "RackLayout";
             else if (this.rdtable4.Checked)
+            {
                 tablename = "RackRaw";
+                sqlstr = "SELECT [ID],[RackID],[LayID],[RackName],[Rawsheet],[Laymemo],[ColumnNo],[RowNo],[FlexibleID],[UniqueID] FROM [RackRaw]";
+            }
             else if (this.rdtable5.Checked)
                 tablename = "Raw";
             else if(this.rdtable6.Checked)
